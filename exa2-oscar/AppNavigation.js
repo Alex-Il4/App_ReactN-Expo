@@ -1,6 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import HomeScreen from './frontend/screens/HomeScreen';
+import SettingsScreen from './frontend/screens/SettingsScreen';
+import { useTheme } from './frontend/context/ThemeContext';
 const Tab = createBottomTabNavigator();
 
 const AppTabs = () => {
@@ -22,6 +25,14 @@ const AppTabs = () => {
           ),
         }}
       />
+      <Tab.Screen name="Configuracion" component={SettingsScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+
     </Tab.Navigator>
   );
 };
