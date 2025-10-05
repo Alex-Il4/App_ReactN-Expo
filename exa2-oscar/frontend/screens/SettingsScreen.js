@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Switch } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 
@@ -68,12 +68,12 @@ const SettingsScreen = () => {
       <Text style={styles.title}>Configuración</Text>
 
       <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('Profile') }}>
-        <Icon name="user" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="manage-accounts" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Editar Perfil</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
-        <Icon name="bell" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="circle-notifications" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Notificaciones</Text>
         <View style={styles.switchContainer}>
           <Switch
@@ -86,7 +86,7 @@ const SettingsScreen = () => {
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.button}>
-        <Icon name="moon" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="light-mode" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Tema Oscuro</Text>
         <View style={styles.switchContainer}>
           <Switch
@@ -96,22 +96,22 @@ const SettingsScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Icon name="globe" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="language" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Idioma</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Icon name="lock" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="lock" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Cambiar Contraseña</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Icon name="info" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="info" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Acerca de la Aplicación</Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
-        <Icon name="trash-2" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <MaterialIcons name="trash-2" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.deleteButtonText}>Eliminar Cuenta</Text>
       </TouchableOpacity>
 
