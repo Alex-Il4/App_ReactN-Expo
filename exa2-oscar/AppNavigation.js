@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 import HomeScreen from './frontend/screens/HomeScreen';
 import SettingsScreen from './frontend/screens/SettingsScreen';
 import { useTheme } from './frontend/context/ThemeContext';
