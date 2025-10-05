@@ -67,9 +67,9 @@ const SettingsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Configuración</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('Profile') }}>
+      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('Administrar') }}>
         <MaterialIcons name="manage-accounts" size={24} color="#ffffff" style={{ marginRight: 15 }} />
-        <Text style={styles.buttonText}>Editar Perfil</Text>
+        <Text style={styles.buttonText}>Perfil</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>

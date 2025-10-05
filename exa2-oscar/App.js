@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 // Importa todas las pantallas
 import LoginScreen from './frontend/screens/LoginScreen';
 import HomeScreen from './frontend/screens/HomeScreen';
+import ProfileScreen from './frontend/screens/ProfileScreen';
 import AppTabs from './AppNavigation';
 
 // Importa el proveedor de tema
@@ -33,6 +34,7 @@ const App = () => {
               <Stack.Screen name="Main" component={AppTabs} options={{ headerShown: false }} />
               
               {/* Pantallas secundarias que se navegan desde el Stack principal */}
+                  <Stack.Screen name="Administrar" component={ProfileScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
             </Stack.Navigator>
           </NavigationContainer>
