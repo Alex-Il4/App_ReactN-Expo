@@ -1,15 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { UserProvider } from './frontend/context/UserContext';
 import { NavigationContainer } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react'; // Asegúrate de importar React hooks si los usas
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Para verificar la sesión inicial
+import { Text, View } from 'react-native'; // Para mostrar un mensaje mientras se verifica el token
+// Importa los proveedores y el hook useUser
+import { ThemeProvider } from './frontend/context/ThemeContext';
+import { UserProvider, useUser } from './frontend/context/UserContext'; // 🚨 IMPORTAR useUser
 
 // Importa todas las pantallas
 import LoginScreen from './frontend/screens/LoginScreen';
-import HomeScreen from './frontend/screens/HomeScreen';
 import ProfileScreen from './frontend/screens/ProfileScreen';
 import AppTabs from './AppNavigation';
-
-// Importa el proveedor de tema
-import { ThemeProvider } from './frontend/context/ThemeContext'; 
 
 // SQLite
 import { SQLiteProvider } from 'expo-sqlite';
@@ -17,31 +18,62 @@ import { initializeDatabase } from './frontend/db/database';
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
-  return (
-    // 1. Proveedor de Tema
-    <ThemeProvider>
-      {/* 2. Proveedor de Usuario */}
-      <UserProvider>
-        {/* 3. Proveedor de Base de Datos */}
-        <SQLiteProvider databaseName="nombre_db" onInit={initializeDatabase}>
-          {/* 4. Contenedor de Navegacion */}
-          <NavigationContainer>
-            {/* 5. Stack Navigator principal */}
-            <Stack.Navigator initialRouteName="Login">
-              <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-              {/* 'Main' usa el AppTabs (navegacion de pestañas) como componente */}
-              <Stack.Screen name="Main" component={AppTabs} options={{ headerShown: false }} />
-              
-              {/* Pantallas secundarias que se navegan desde el Stack principal */}
-                  <Stack.Screen name="Administrar" component={ProfileScreen} />
-              <Stack.Screen name="Home" component={HomeScreen} />
+const AppContent = () => {
+    const { user, setUser } = useUser(); 
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                const userToken = await AsyncStorage.getItem('userToken'); 
+                if (userToken) {
+                    setUser(true);
+                }
+            } catch (e) {
+                console.error("Fallo al verificar token", e);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        checkLogin();
+    }, []);
+
+    if (isLoading) {
+        // Podrías devolver un componente de carga más elegante aquí
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Cargando aplicación...</Text>
+            </View>
+        );
+    }
+    
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                {user ? (
+                    <>
+                        <Stack.Screen name="Main" component={AppTabs} options={{ headerShown: false }} />
+                        <Stack.Screen name="Administrar" component={ProfileScreen} />
+                    </>
+                ) : (
+                    // Si NO hay usuario (deslogueado): Muestra el Stack de autenticación
+                    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                )}
             </Stack.Navigator>
-          </NavigationContainer>
-        </SQLiteProvider>
-      </UserProvider>
-    </ThemeProvider>
-  );
+        </NavigationContainer>
+    );
+};
+
+
+const App = () => {
+    return (
+        <ThemeProvider>
+            <UserProvider>
+                <SQLiteProvider databaseName="nombre_db" onInit={initializeDatabase}>
+                    <AppContent />
+                </SQLiteProvider>
+            </UserProvider>
+        </ThemeProvider>
+    );
 };
 
 export default App;

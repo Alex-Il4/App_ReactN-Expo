@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { useUser } from '../context/UserContext';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +12,8 @@ const LoginScreen = () => {
   const [isFocused2, setIsFocused2] = useState(false);
   const navigation = useNavigation();
   const { darkMode } = useTheme();
+  const { setUser } = useUser(); 
+
 
   useEffect(() => {
     const checkToken = async() => {
@@ -23,14 +26,26 @@ const LoginScreen = () => {
   }, []);
 
   const handleLogin = async() => {
-    if (username && password) {
-      await AsyncStorage.setItem('user', username);
-      await AsyncStorage.setItem('token', 'fakeToken');
-      navigation.replace('Main');
-    }else{
-      alert ('Debe ingresar usuario y contraseña');
-    }
-  };
+        if (username && password) {
+            // 🚨 1. Lógica de Autenticación Exitosa 🚨
+            
+            // Simular autenticación exitosa
+            const userData = { username: username, token: 'fakeToken' };
+
+            // 2. Almacenar datos de sesión (usa 'userToken' y 'user' para mayor claridad)
+            await AsyncStorage.setItem('user', username);
+            await AsyncStorage.setItem('userToken', userData.token); 
+
+            // 3. 🚨 Actualizar el estado global del usuario 🚨
+            // Esto es lo que activa la navegación automática en App.js
+            setUser(userData); 
+
+            // ❌ ELIMINAR navigation.replace('Main'); - Esto causaba conflicto ❌
+            
+        } else {
+            Alert.alert('Error', 'Debe ingresar usuario y contraseña'); // Usar Alert de RN
+        }
+    };
 
   const styles = StyleSheet.create({
     container: {
@@ -91,39 +106,39 @@ const LoginScreen = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.texto}>Inicia Sesion</Text>
+        <View style={styles.container}>
+            <Text style={styles.texto}>Inicia Sesion</Text>
 
-      <TextInput 
-        style={[
-          styles.input, 
-          { borderWidth: isFocused1 ? 3 : 1 }
-        ]}
-        placeholder="Usuario"
-        placeholderTextColor={darkMode ? '#ccc' : '#777'}
-        value={username} 
-        onChangeText={text => setUsername(text)} 
-        onFocus={() => setIsFocused1(true)} 
-        onBlur={() => setIsFocused1(false)} />
+            <TextInput 
+                style={[
+                    styles.input, 
+                    { borderWidth: isFocused1 ? 3 : 1, borderColor: isFocused1 ? '#007ca5ff' : styles.input.borderColor } // Mejorar el color de foco
+                ]}
+                placeholder="Usuario"
+                placeholderTextColor={darkMode ? '#ccc' : '#777'}
+                value={username} 
+                onChangeText={setUsername} 
+                onFocus={() => setIsFocused1(true)} 
+                onBlur={() => setIsFocused1(false)} />
 
-      <TextInput 
-        style={[
-          styles.input, 
-          { borderWidth: isFocused2 ? 3 : 1 }
-        ]} 
-        placeholder="Contraseña"
-        placeholderTextColor={darkMode ? '#ccc' : '#777'}
-        secureTextEntry={true} 
-        value={password} 
-        onChangeText={text => setPassword(text)} 
-        onFocus={() => setIsFocused2(true)} 
-        onBlur={() => setIsFocused2(false)} />
+            <TextInput 
+                style={[
+                    styles.input, 
+                    { borderWidth: isFocused2 ? 3 : 1, borderColor: isFocused2 ? '#007ca5ff' : styles.input.borderColor }
+                ]} 
+                placeholder="Contraseña"
+                placeholderTextColor={darkMode ? '#ccc' : '#777'}
+                secureTextEntry={true} 
+                value={password} 
+                onChangeText={setPassword} 
+                onFocus={() => setIsFocused2(true)} 
+                onBlur={() => setIsFocused2(false)} />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Iniciar Sesion</Text>
-      </TouchableOpacity>
-    </View>
-  );
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Iniciar Sesion</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 export default LoginScreen;

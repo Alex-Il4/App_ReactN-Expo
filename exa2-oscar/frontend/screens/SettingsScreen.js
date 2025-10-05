@@ -2,14 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../context/UserContext';
 import { useTheme } from '../context/ThemeContext';
 
 const SettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
   const navigation = useNavigation();
   const { darkMode, toggleDarkMode } = useTheme(); 
+  const { logout } = useUser(); 
 
-
+  const handleLogout = async () => {
+    await logout(); 
+};
+    
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -94,23 +99,12 @@ const SettingsScreen = () => {
             onValueChange={toggleDarkMode}/>
         </View>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <MaterialIcons name="language" size={24} color="#ffffff" style={{ marginRight: 15 }} />
-        <Text style={styles.buttonText}>Idioma</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <MaterialIcons name="lock" size={24} color="#ffffff" style={{ marginRight: 15 }} />
-        <Text style={styles.buttonText}>Cambiar Contraseña</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity style={styles.button} onPress={() => {}}>
         <MaterialIcons name="info" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.buttonText}>Acerca de la Aplicación</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.deleteButton} onPress={handleLogout}>
         <MaterialIcons name="logout" size={24} color="#ffffff" style={{ marginRight: 15 }} />
         <Text style={styles.deleteButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
