@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {MaterialIcons} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -122,31 +122,20 @@ const ProfileScreen = () => {
         <Text style={styles.title}>Perfil de Usuario</Text>
 
         <View style={styles.infoField}>
-          <Icon name="user" size={20} color= {darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
-          <Text style={styles.fieldLabel}>Nombre: </Text>
-          <Text style={styles.fieldValue}>Dr. {user}</Text>
+          <MaterialIcons name="person" size={20} color= {darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
+          <Text style={styles.fieldLabel}>Usuario: </Text>
+          <Text style={styles.fieldValue}>{user}</Text>
         </View>
 
         <View style={styles.infoField}>
-          <Icon name="briefcase" size={20} color= {darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
-          <Text style={styles.fieldLabel}>Especialidad: </Text>
-          <Text style={styles.fieldValue}>Pediatría</Text>
-        </View>
-
-        <View style={styles.infoField}>
-          <Icon name="mail" size={20} color= {darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
+          <MaterialIcons name="mail" size={20} color= {darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
           <Text style={styles.fieldLabel}>Correo: </Text>
           <Text style={styles.fieldValue}>{user}@gmail.com</Text>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={() => { }}>
-          <Icon name="edit" size={20} color="#ffffff" style={{ marginRight: 5 }} />
+          <MaterialIcons name="edit" size={20} color="#ffffff" style={{ marginRight: 5 }} />
           <Text style={styles.buttonText}>Editar Perfil</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonCerrar} onPress={handleLogout}>
-          <Icon name="log-out" size={20} color="#ffffff" style={{ marginRight: 5 }} />
-          <Text style={styles.buttonText}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
