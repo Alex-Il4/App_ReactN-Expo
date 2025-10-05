@@ -111,8 +111,8 @@ const SettingsScreen = () => {
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
-        <MaterialIcons name="trash-2" size={24} color="#ffffff" style={{ marginRight: 15 }} />
-        <Text style={styles.deleteButtonText}>Eliminar Cuenta</Text>
+        <MaterialIcons name="logout" size={24} color="#ffffff" style={{ marginRight: 15 }} />
+        <Text style={styles.deleteButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
 
       <StatusBar style="auto" />
