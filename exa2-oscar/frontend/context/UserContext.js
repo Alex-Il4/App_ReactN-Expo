@@ -1,23 +1,27 @@
 import React, { useState, createContext, useContext } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // 🚨 NECESARIO PARA EL LOGOUT
-
-// 1. Crear el Contexto
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    // Estado inicial del usuario (null si no está logueado)
+    //Estado inicial del usuario que sera null si no esta logueado
     const [user, setUser] = useState(null); 
-
-    // 🚨 2. Función de Logout Asíncrona 🚨
+     const updateUser = async (newUserName) => {
+        try {
+            //Actualiza asyncstorage con el nuevo nombre
+            await AsyncStorage.setItem('user', newUsername); 
+            setUser(prevUser => ({
+                ...prevUser,
+                username: newUsername, 
+            }));
+        } catch (e) {
+            console.error("Error al actualizar el nombre de usuario: ", e);
+        }
+    };
+    //Funcion para cerrar sesion
     const logout = async () => {
         try {
-            // Elimina las claves de sesión (ej. token o datos de usuario)
+            //Elimina el token de usurio
             await AsyncStorage.removeItem('userToken'); 
-            
-            // Opcional: Si quieres limpiar más datos, añade más removeItem, o usa:
-            // await AsyncStorage.clear();
-
-            // Restablece el estado del usuario a null
             setUser(null); 
         } catch (e) {
             console.error("Error al cerrar sesión: ", e);
@@ -25,7 +29,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, setUser, logout }}>
+        <UserContext.Provider value={{ user, setUser, logout, updateUser  }}>
             {children}
         </UserContext.Provider>
     );

@@ -6,44 +6,25 @@ import { useTheme } from '../context/ThemeContext';
 import { useUser } from '../context/UserContext';
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isFocused1, setIsFocused1] = useState(false);
-  const [isFocused2, setIsFocused2] = useState(false);
-  const navigation = useNavigation();
-  const { darkMode } = useTheme();
-  const { setUser } = useUser(); 
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isFocused1, setIsFocused1] = useState(false);
+    const [isFocused2, setIsFocused2] = useState(false);
+    
+    //Obtener setUser del context
+    const { darkMode } = useTheme();
+    const { setUser } = useUser(); 
 
-
-  useEffect(() => {
-    const checkToken = async() => {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        navigation.replace('Main');
-      }
-    };
-    checkToken();
-  }, []);
-
-  const handleLogin = async() => {
+    const handleLogin = async() => {
         if (username && password) {
-            // 🚨 1. Lógica de Autenticación Exitosa 🚨
-            
-            // Simular autenticación exitosa
             const userData = { username: username, token: 'fakeToken' };
-
-            // 2. Almacenar datos de sesión (usa 'userToken' y 'user' para mayor claridad)
+            //Almacenar los datos en asyncstorage
             await AsyncStorage.setItem('user', username);
             await AsyncStorage.setItem('userToken', userData.token); 
-
-            // 3. 🚨 Actualizar el estado global del usuario 🚨
-            // Esto es lo que activa la navegación automática en App.js
             setUser(userData); 
-
-            // ❌ ELIMINAR navigation.replace('Main'); - Esto causaba conflicto ❌
             
         } else {
-            Alert.alert('Error', 'Debe ingresar usuario y contraseña'); // Usar Alert de RN
+            Alert.alert('Error', 'Debe ingresar usuario y contraseña');
         }
     };
 
