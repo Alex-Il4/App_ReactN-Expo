@@ -4,13 +4,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 // --- Importaciones de Librerías de Terceros ---
 import Icon from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { LinearGradient } from 'expo-linear-gradient'; 
+import { LinearGradient } from 'expo-linear-gradient';
 
 // --- Importaciones de Contextos ---
-import { useTheme } from '../context/ThemeContext'; 
+import { useTheme } from '../context/ThemeContext';
 
 // Definicion de constantes (fuera del componente para evitar recreacion)
 const gradientColors = ['#007bff', '#8A2BE2', '#FF69B4'];
@@ -23,10 +23,10 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const { darkMode } = useTheme(); // Hook de Tema
     const tabBarHeight = useBottomTabBarHeight(); // Hook de Navegación
-    
+
     // --- 2. Estado ---
-    const [user, setUser] = useState(''); 
-    
+    const [user, setUser] = useState('');
+
     // --- 3. Efectos ---
     useEffect(() => {
         const loadUser = async () => {
@@ -45,7 +45,7 @@ const HomeScreen = () => {
     // --- 4. Estilos Dinámicos (Usando useMemo para optimización) ---
     const styles = useMemo(() => StyleSheet.create({
         container: {
-            flex: 1, 
+            flex: 1,
             backgroundColor: darkMode ? '#222' : '#C2B9B6',
             alignItems: 'center',
             justifyContent: 'flex-start',
@@ -60,18 +60,18 @@ const HomeScreen = () => {
             color: darkMode ? '#b0b0b0ff' : '#393939',
         },
         // ... (otros estilos de boton y texto)
-        
+
         // Estilos del Boton Flotante AI
         floatingAIButton: {
-            position: 'absolute', 
-            right: AI_BUTTON_MARGIN, 
+            position: 'absolute',
+            right: AI_BUTTON_MARGIN,
             bottom: AI_BUTTON_MARGIN + tabBarHeight, // Ajuste con el hook
-            width: AI_BUTTON_SIZE, 
+            width: AI_BUTTON_SIZE,
             height: AI_BUTTON_SIZE,
-            borderRadius: AI_BUTTON_SIZE / 2, 
+            borderRadius: AI_BUTTON_SIZE / 2,
             justifyContent: 'center',
             alignItems: 'center',
-            elevation: 5, 
+            elevation: 5,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
@@ -89,7 +89,7 @@ const HomeScreen = () => {
     // --- 5. Handlers ---
     const handleAINavigate = () => {
         // Asegúrate de que 'AIChat' esté definido en tu Stack Navigator
-        navigation.navigate('AIChat'); 
+        navigation.navigate('AIChat');
     };
 
     return (
@@ -98,7 +98,7 @@ const HomeScreen = () => {
             <Text style={styles.title}>
                 Bienvenido {user || 'usuario'}, a la Clinica Pediatrica
             </Text>
-            
+
             {/* Botones de Navegacion Principal (Añadir aquí) */}
             {/* ... */}
 
@@ -110,7 +110,7 @@ const HomeScreen = () => {
                     end={{ x: 1, y: 0 }}
                     style={styles.linearGradient}
                 >
-                    <MaterialIcons name="auto-awesome" size={28} color="#FFFFFF" /> 
+                    <MaterialIcons name="auto-awesome" size={28} color="#FFFFFF" />
                 </LinearGradient>
             </TouchableOpacity>
 
