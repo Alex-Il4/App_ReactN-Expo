@@ -9,8 +9,7 @@ const SettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
   const navigation = useNavigation();
   const { darkMode, toggleDarkMode } = useTheme(); 
-  const { logout } = useUser(); 
-
+const { user, logout } = useUser();
   const handleLogout = async () => {
     await logout(); 
 };
