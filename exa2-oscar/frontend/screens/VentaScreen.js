@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Usamos MaterialIcons
-import { useSQLiteContext } from 'expo-sqlite'; // 🚨 Importa el hook para acceder a la DB 🚨
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useTheme } from '../context/ThemeContext';
+
 
 const VentaScreen = ({ route }) => {
     const navigation = useNavigation();
     const db = useSQLiteContext(); 
-    
+    const { darkMode } = useTheme();
+
     // Estado para la imagen seleccionada
     const [imageUrl, setImageUrl] = useState(null);
 
@@ -81,6 +84,73 @@ const VentaScreen = ({ route }) => {
             Alert.alert("Error", "Ocurrió un error al guardar el vehículo.");
         }
     };
+    //Estilos
+    const styles = StyleSheet.create({
+    container: {
+            flexGrow: 1,
+            padding: 20,
+            backgroundColor: darkMode ? '#1a1a1a' : '#f8f8f8', 
+            alignItems: 'center',
+        },
+        header: {
+            fontSize: 28,
+            fontWeight: 'bold',
+            color: darkMode ? '#00c0ff' : '#0d70adff', // 🚨 AJUSTE DE TEXTO 🚨
+            marginBottom: 30,
+        },
+    imagePlaceholder: {
+        width: '100%',
+        height: 200,
+        backgroundColor: '#e0e0e0',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        borderWidth: 2,
+        borderColor: '#007ca5ff',
+        overflow: 'hidden',
+    },
+    placeholderContent: {
+        alignItems: 'center',
+    },
+    imagePlaceholderText: {
+        marginTop: 5,
+        color: '#007ca5ff',
+        fontSize: 16,
+        fontWeight: '500',
+    },
+    previewImage: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    input: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        paddingHorizontal: 15,
+        marginBottom: 15,
+        borderWidth: 1,
+        borderColor: '#0d70adff',
+        fontSize: 16,
+    },
+    saveButton: {
+        width: '100%',
+        height: 55,
+        backgroundColor: '#0d70adff',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 30,
+        elevation: 3,
+    },
+    saveButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+});
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -146,73 +216,4 @@ const VentaScreen = ({ route }) => {
         </ScrollView>
     );
 };
-
-// Estilos (simplificados aquí, puedes usar tus estilos completos)
-const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        padding: 20,
-        backgroundColor: '#f8f8f8',
-        alignItems: 'center',
-    },
-    header: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#0d70adff',
-        marginBottom: 30,
-    },
-    imagePlaceholder: {
-        width: '100%',
-        height: 200,
-        backgroundColor: '#e0e0e0',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        borderWidth: 2,
-        borderColor: '#007ca5ff',
-        overflow: 'hidden',
-    },
-    placeholderContent: {
-        alignItems: 'center',
-    },
-    imagePlaceholderText: {
-        marginTop: 5,
-        color: '#007ca5ff',
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    previewImage: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-    },
-    input: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        marginBottom: 15,
-        borderWidth: 1,
-        borderColor: '#0d70adff',
-        fontSize: 16,
-    },
-    saveButton: {
-        width: '100%',
-        height: 55,
-        backgroundColor: '#0d70adff',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-        elevation: 3,
-    },
-    saveButtonText: {
-        color: '#ffffff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-});
-
 export default VentaScreen;
