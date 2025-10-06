@@ -3,13 +3,15 @@
 export async function initializeDatabase(db) {
     //crear tabla patients
     await db.execAsync(`
-        CREATE TABLE IF NOT EXISTS patients (
+        CREATE TABLE IF NOT EXISTS vehicles (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            age INTEGER NOT NULL,
-            gender TEXT NOT NULL,
-            phone TEXT NOT NULL,
-            email TEXT NOT NULL
+            title TEXT NOT NULL,
+            puertas INTEGER NOT NULL,
+            formattedPrice TEXT NOT NULL,
+            reviewCount INTEGER,
+            imageUrl TEXT NOT NULL,
+            imageAlt TEXT,
+            rating REAL DEFAULT 4.5
         );
     `);
 }

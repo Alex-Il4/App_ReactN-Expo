@@ -1,16 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react'; // Asegúrate de importar React hooks si los usas
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Para verificar la sesión inicial
-import { Text, View } from 'react-native'; // Para mostrar un mensaje mientras se verifica el token
-// Importa los proveedores y el hook useUser
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Text, View } from 'react-native';
 import { ThemeProvider } from './frontend/context/ThemeContext';
-import { UserProvider, useUser } from './frontend/context/UserContext'; // 🚨 IMPORTAR useUser
-
-// Importa todas las pantallas
+import { UserProvider, useUser } from './frontend/context/UserContext'; 
 import LoginScreen from './frontend/screens/LoginScreen';
 import ProfileScreen from './frontend/screens/ProfileScreen';
 import AppTabs from './AppNavigation';
+import VentaScreen from './frontend/screens/VentaScreen';
 
 // SQLite
 import { SQLiteProvider } from 'expo-sqlite';
@@ -53,6 +51,7 @@ const AppContent = () => {
                     <>
                         <Stack.Screen name="Main" component={AppTabs} options={{ headerShown: false }} />
                         <Stack.Screen name="Administrar" component={ProfileScreen} />
+                        <Stack.Screen name="Vender" component={VentaScreen} />
                     </>
                 ) : (
                     // Si NO hay usuario (deslogueado): Muestra el Stack de autenticación

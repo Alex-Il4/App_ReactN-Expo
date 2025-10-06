@@ -5,6 +5,7 @@ import HomeScreen from './frontend/screens/HomeScreen';
 import SettingsScreen from './frontend/screens/SettingsScreen';
 import ProfileScreen from './frontend/screens/ProfileScreen';
 import { useTheme } from './frontend/context/ThemeContext';
+import VentaScreen from './frontend/screens/VentaScreen';
 const Tab = createBottomTabNavigator();
 
 const AppTabs = () => {
@@ -27,6 +28,13 @@ const AppTabs = () => {
         }}
       />
       <Tab.Screen name="Configuracion" component={SettingsScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="settings" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen name="Vender" component={VentaScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings" color={color} size={size} />
