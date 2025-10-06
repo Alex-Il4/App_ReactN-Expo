@@ -99,9 +99,8 @@ const styles = StyleSheet.create({
     }, [vehicleId]);
 
 
-    // Función para seleccionar una imagen (misma lógica que en VentaScreen)
+    //Función para seleccionar una imagen
     const handleImagePicker = async () => {
-        // ... (código de ImagePicker aquí, omitido por brevedad, usa la lógica de VentaScreen)
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (status !== 'granted') {
@@ -119,8 +118,7 @@ const styles = StyleSheet.create({
             setImageUrl(result.assets[0].uri);
         }
     };
-
-    // 🚨 Función para guardar los cambios con UPDATE 🚨
+    //Función para guardar los cambios con UPDATE
     const handleUpdate = async () => {
         if (!title || !puertas || !formattedPrice || !imageUrl) {
             Alert.alert('Error', 'Por favor, complete todos los campos obligatorios.');
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
                     parseInt(reviewCount || 0),
                     imageUrl,
                     imageAlt,
-                    vehicleId // 🚨 ID necesario para la cláusula WHERE 🚨
+                    vehicleId
                 ]
             );
 
@@ -188,7 +186,6 @@ const styles = StyleSheet.create({
                 keyboardType="numeric"
                 editable={!loading}
             />
-            {/* ... (Otros TextInputs) ... */}
             <TextInput
                 style={styles.input}
                 placeholder="Precio"

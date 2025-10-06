@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'; 
 import { useTheme } from '../context/ThemeContext';
 import { useUser } from '../context/UserContext'; 
-import { useSQLiteContext } from 'expo-sqlite'; // 👈 Importamos el hook de SQLite
+import { useSQLiteContext } from 'expo-sqlite';
 
 const gradientColors = ['#007ca5ff', '#0d70adff']; 
 
@@ -15,8 +15,6 @@ const HomeScreen = () => {
     const { darkMode } = useTheme();
     const tabBarHeight = useBottomTabBarHeight();
     const { user } = useUser(); 
-    
-    // 🚨 Estado para almacenar los datos de la DB 🚨
     const [vehicles, setVehicles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
@@ -25,32 +23,26 @@ const HomeScreen = () => {
     // 🚨 Función para cargar los datos de la tabla 'vehicles' 🚨
     const loadVehicles = async () => {
         try {
-            // Usamos getAllAsync con la nueva tabla 'vehicles'
             const result = await db.getAllAsync("SELECT * FROM vehicles ORDER BY id DESC");
             setVehicles(result);
         } catch (error) {
             console.error("Error al cargar vehículos:", error);
-            // Opcional: Mostrar un Alert al usuario si la carga falla
+            //Mostrar un alert si la carga falla
         } finally {
             setIsLoading(false);
         }
     };
-
-    // 🚨 useEffect para cargar los datos al inicio y cada vez que la pantalla esté enfocada 🚨
     useEffect(() => {
-        // Cargar datos al montar
+        //Cargar datos al montar
         loadVehicles();
-
-        // Opcional: Recargar datos cada vez que la pantalla vuelve a estar enfocada (útil tras añadir una venta)
         const unsubscribe = navigation.addListener('focus', () => {
             loadVehicles();
         });
 
-        return unsubscribe; // Limpieza del listener
+        return unsubscribe; //Limpieza del listener
     }, [navigation]);
 
-
-    // Componente para renderizar cada item en el FlatList
+    //Componente para renderizar cada item en el FlatList
     const renderVehicleItem = ({ item }) => (
         <View style={[styles.card, darkMode && styles.cardDark]}>
             <Image 
@@ -99,7 +91,7 @@ const HomeScreen = () => {
         },
         listContainer: {
             paddingHorizontal: 15,
-            paddingBottom: tabBarHeight + 100, // Espacio suficiente para el botón flotante
+            paddingBottom: tabBarHeight + 100, // Espacio para el botón flotante
         },
         card: {
             flexDirection: 'row',
@@ -165,7 +157,7 @@ const HomeScreen = () => {
             borderRadius: 30,
             overflow: 'hidden',
             elevation: 8,
-            zIndex: 10, // Asegura que esté sobre la FlatList
+            zIndex: 10,
         },
         linearGradient: {
             width: 60,
@@ -188,10 +180,8 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {/* Mensaje de Bienvenida */}
             <Text style={styles.title}>
-                Bienvenido {user?.username || 'usuario'}, a la Clinica Pediatrica
+                Bienvenido {user?.username || 'usuario'}
             </Text>
-
-            {/* 🚨 FLATLIST para mostrar los vehículos 🚨 */}
             <FlatList
                 data={vehicles}
                 keyExtractor={(item) => item.id.toString()}
@@ -206,7 +196,7 @@ const HomeScreen = () => {
                 style={{ flex: 1, width: '100%' }}
             />
             
-            {/* Botón flotante de IA */}
+            {/* Botón flotante del chat con IA */}
             <TouchableOpacity style={styles.floatingAIButton} onPress={handleAINavigate}>
                 <LinearGradient
                     colors={gradientColors}
