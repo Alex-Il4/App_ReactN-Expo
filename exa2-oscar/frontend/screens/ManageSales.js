@@ -18,7 +18,6 @@ const ManageSalesScreen = () => {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            // 🚨 EL FONDO SE APLICA AQUÍ 🚨
             backgroundColor: darkMode ? '#121212' : '#f8f8f8',
             padding: 10,
         },
