@@ -1,7 +1,7 @@
 //inicializar base de datos
 
 export async function initializeDatabase(db) {
-    //crear tabla patients
+    //crear tabla para guardar los datos
     await db.execAsync(`
         CREATE TABLE IF NOT EXISTS vehicles (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
