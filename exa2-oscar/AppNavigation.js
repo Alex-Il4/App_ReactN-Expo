@@ -28,21 +28,21 @@ const AppTabs = () => {
           ),
         }}
       />
-      <Tab.Screen name="Configuracion" component={SettingsScreen} 
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" color={color} size={size} />
-          ),
-        }}
-      />
       <Tab.Screen name="Vender" component={VentaScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" color={color} size={size} />
+            <MaterialIcons name="attach-money" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen name="Gestión" component={ManageSalesScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="folder" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen name="Configuracion" component={SettingsScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings" color={color} size={size} />
