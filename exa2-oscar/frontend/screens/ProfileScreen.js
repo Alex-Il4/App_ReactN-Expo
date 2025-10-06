@@ -10,18 +10,18 @@ const ProfileScreen = () => {
     const { darkMode } = useTheme();
     const { user, updateUser } = useUser(); 
 
-    // 1. Estado local para el campo de edición, inicializado con el valor del contexto
+    //Estado local para el campo de edición, inicializandolo con el valor del contexto
     const [editableUsername, setEditableUsername] = useState(user || '');
     const [isFocused, setIsFocused] = useState(false);
 
-    // 2. Sincronizar el estado local si el contexto cambia (p. ej., al cargar la app)
+    //Sincronizar el estado local si el contexto cambia
     useEffect(() => {
         if (user && user !== editableUsername) {
             setEditableUsername(user);
         }
     }, [user]);
 
-    // 3. Función para guardar los cambios usando el contexto
+    //Función para guardar los cambios usando el contexto
     const handleUpdate = async () => {
         const trimmedName = editableUsername.trim();
         
@@ -29,13 +29,11 @@ const ProfileScreen = () => {
             Alert.alert("Error", "El nombre de usuario no puede estar vacío.");
             return;
         }
-
         if (trimmedName === user) {
             Alert.alert("Información", "No hay cambios para guardar.");
             return;
         }
-
-        // Llamar a la función del contexto
+        //Llama a la función del contexto
         await updateUser(trimmedName);
         Alert.alert("Éxito", "¡Nombre de usuario actualizado!");
     };
@@ -43,14 +41,12 @@ const ProfileScreen = () => {
   const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // Color de fondo basado en el modo oscuro
         backgroundColor: darkMode ? '#222' : '#C2B9B6', 
         alignItems: 'center',
         padding: 20,
     },
     cardContainer: {
         width: '100%',
-        // Fondo de la tarjeta más claro en modo oscuro
         backgroundColor: darkMode ? '#333' : '#ffffff', 
         borderRadius: 10,
         padding: 20,
@@ -65,7 +61,6 @@ const ProfileScreen = () => {
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 10,
-        // Color del texto basado en el modo oscuro
         color: darkMode ? '#fff' : '#393939', 
     },
     instructionText: {
@@ -79,11 +74,10 @@ const ProfileScreen = () => {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 15,
-        paddingVertical: 5, // Espacio para el campo de entrada
+        paddingVertical: 5,
     },
     fieldIcon: {
         marginRight: 10,
-        // El color del ícono (se ajusta en el JSX)
     },
     fieldLabel: {
         fontSize: 16,
@@ -91,25 +85,21 @@ const ProfileScreen = () => {
         color: darkMode ? '#fff' : '#393939',
         minWidth: 70,
     },
-    // Estilo para el TextInput del nombre de usuario (editable)
     fieldInput: { 
         flex: 1,
         fontSize: 16,
         paddingVertical: 0,
         color: darkMode ? '#fff' : '#000',
-        // Borde inferior para simular un campo de edición
         borderBottomWidth: 1, 
-        // El color del borde cambia con el enfoque
         borderBottomColor: isFocused ? '#0d70ad' : (darkMode ? '#555' : '#ccc'),
     },
-    // Estilo para el campo de Correo (solo lectura)
     fieldValue: { 
         fontSize: 16,
         color: darkMode ? '#fff' : '#000',
     },
     button: {
         height: 45,
-        backgroundColor: '#0d70adff', // Color fijo para el botón de acción
+        backgroundColor: '#0d70adff',
         borderRadius: 10,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -128,17 +118,12 @@ const ProfileScreen = () => {
         <View style={styles.container}>
             <View style={styles.cardContainer}>
                 <Text style={styles.title}>Perfil de Usuario</Text>
-
-                {/* 🚨 1. Nuevo Texto de Instrucción 🚨 */}
                 <Text style={styles.instructionText}>
                     Para actualizar su nombre de usuario solo debe cambiar el nombre en el campo Usuario y presionar "Editar Perfil".
                 </Text>
-
-                {/* 🚨 2. Campo de Usuario Transformado a TextInput 🚨 */}
                 <View style={styles.infoField}>
                     <MaterialIcons name="person" size={20} color={darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
                     <Text style={styles.fieldLabel}>Usuario: </Text>
-                    
                     <TextInput
                         style={styles.fieldInput}
                         value={editableUsername}
@@ -149,16 +134,11 @@ const ProfileScreen = () => {
                         placeholderTextColor={darkMode ? '#888' : '#aaa'}
                     />
                 </View>
-
-                {/* Campo de Correo (sigue siendo solo texto) */}
                 <View style={styles.infoField}>
                     <MaterialIcons name="mail" size={20} color={darkMode ? '#b0b0b0ff' : "#0d70ad"} style={styles.fieldIcon} />
                     <Text style={styles.fieldLabel}>Correo: </Text>
-                    {/* Usamos el user del contexto para que refleje el cambio inmediatamente */}
                     <Text style={styles.fieldValue}>{user?.username}@gmail.com</Text> 
                 </View>
-
-                {/* 🚨 3. Botón de Actualización que llama a handleUpdate 🚨 */}
                 <TouchableOpacity style={styles.button} onPress={handleUpdate}>
                     <MaterialIcons name="save" size={20} color="#ffffff" style={{ marginRight: 5 }} />
                     <Text style={styles.buttonText}>Editar Perfil</Text>

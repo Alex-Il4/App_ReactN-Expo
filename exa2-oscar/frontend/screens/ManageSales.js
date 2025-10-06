@@ -3,18 +3,16 @@ import { View, Text, FlatList, StyleSheet, Alert, TouchableOpacity, Image, Activ
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useTheme } from '../context/ThemeContext'; // Importación necesaria para darkMode
+import { useTheme } from '../context/ThemeContext';
 
 const ManageSalesScreen = () => {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
-    const { darkMode } = useTheme(); // Obtener el estado del tema
+    const { darkMode } = useTheme();
     const db = useSQLiteContext();
 
     const [vehicles, setVehicles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    // 🚨 Definición de estilos dentro del componente para usar darkMode 🚨
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -97,8 +95,6 @@ const ManageSalesScreen = () => {
         }
     });
 
-
-    // 🚨 1. Cargar los Datos de la DB 🚨
     const loadVehicles = async () => {
         try {
             const result = await db.getAllAsync("SELECT * FROM vehicles ORDER BY id DESC");
@@ -111,14 +107,13 @@ const ManageSalesScreen = () => {
         }
     };
 
-    // 2. Ejecutar la carga al enfocar la pantalla (para ver los cambios)
+    //Ejecutar la carga de la pantalla para ver los cambios
     useEffect(() => {
         if (isFocused) {
             loadVehicles();
         }
-    }, [isFocused, db]); // Agregué 'db' por buena práctica, aunque useSQLiteContext ya es estable.
+    }, [isFocused, db]);
 
-    // 🚨 3. Función para Eliminar una Venta 🚨
     const handleDelete = (id) => {
         Alert.alert(
             "Confirmar Eliminación",
@@ -132,7 +127,7 @@ const ManageSalesScreen = () => {
                         try {
                             await db.runAsync("DELETE FROM vehicles WHERE id = ?", [id]);
                             Alert.alert("Éxito", "Vehículo eliminado correctamente.");
-                            loadVehicles(); // Recargar la lista
+                            loadVehicles(); //Recarga la lista
                         } catch (error) {
                             console.error("Error al eliminar:", error);
                             Alert.alert("Error", "No se pudo eliminar el registro.");
@@ -143,9 +138,8 @@ const ManageSalesScreen = () => {
         );
     };
     
-    // 4. Función para navegar a la pantalla de edición
+    //Función para navegar a la pantalla de edición
     const handleEdit = (vehicleData) => {
-        // Asegúrate de que 'EditarVenta' sea el nombre correcto de tu ruta de edición
         navigation.navigate('EditarVenta', { vehicle: vehicleData });
     };
 
@@ -198,7 +192,6 @@ const ManageSalesScreen = () => {
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContainer}
                 ListEmptyComponent={() => (
-                    // 🚨 TODO TEXTO ESTÁ ENCAPSULADO EN <Text> 🚨
                     <Text style={styles.emptyText}>
                         No hay registros de ventas para administrar.
                     </Text>
