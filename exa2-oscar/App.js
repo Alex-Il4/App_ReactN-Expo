@@ -9,6 +9,7 @@ import LoginScreen from './frontend/screens/LoginScreen';
 import ProfileScreen from './frontend/screens/ProfileScreen';
 import AppTabs from './AppNavigation';
 import VentaScreen from './frontend/screens/VentaScreen';
+import EditSaleScreen from './frontend/screens/EditSales';
 
 // SQLite
 import { SQLiteProvider } from 'expo-sqlite';
@@ -52,6 +53,7 @@ const AppContent = () => {
                         <Stack.Screen name="Main" component={AppTabs} options={{ headerShown: false }} />
                         <Stack.Screen name="Administrar" component={ProfileScreen} />
                         <Stack.Screen name="Vender" component={VentaScreen} />
+                        <Stack.Screen name="EditarVenta" component={EditSaleScreen} />
                     </>
                 ) : (
                     // Si NO hay usuario (deslogueado): Muestra el Stack de autenticación

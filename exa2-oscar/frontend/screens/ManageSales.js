@@ -62,7 +62,7 @@ const ManageSalesScreen = () => {
     // 4. Función para navegar a la pantalla de edición
     const handleEdit = (vehicleData) => {
         // Navegar a la pantalla de edición pasando todos los datos
-        navigation.navigate('EditSaleScreen', { vehicle: vehicleData });
+        navigation.navigate('EditarVenta', { vehicle: vehicleData });
     };
 
     const renderItem = ({ item }) => (
